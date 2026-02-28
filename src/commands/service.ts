@@ -174,6 +174,28 @@ export class ServiceInstaller {
     console.log(`  ${C.dim}Config saved to${C.reset} ${envPath}`);
   }
 
+  /**
+   * Loads saved config from .env.service to accurately report status
+   */
+  private getSavedConfig(): Partial<ServiceConfig> {
+    const envPath = join(this.config.projectDir, ".env.service");
+    if (!existsSync(envPath)) return {};
+    try {
+      const content = readFileSync(envPath, "utf-8");
+      const config: Partial<ServiceConfig> = {};
+
+      const portMatch = content.match(/^PORT=(\d+)$/m);
+      if (portMatch) config.port = parseInt(portMatch[1], 10);
+
+      const hostMatch = content.match(/^HOST=([^\n]+)$/m);
+      if (hostMatch) config.host = hostMatch[1].trim();
+
+      return config;
+    } catch {
+      return {};
+    }
+  }
+
   // -------------------------------------------------------------------------
   // Bun binary resolution
   // -------------------------------------------------------------------------
@@ -303,8 +325,8 @@ ${C.green}${C.bold}✓ Service installed successfully!${C.reset}
   The proxy will start automatically on login.
   It's already running now on ${C.cyan}http://${this.config.host}:${this.config.port}${C.reset}
 
-  ${C.dim}To check status:${C.reset}  bun run src/index.ts service status
-  ${C.dim}To uninstall:${C.reset}    bun run src/index.ts service uninstall
+  ${C.dim}To check status:${C.reset}  gemini-claude-code service status
+  ${C.dim}To uninstall:${C.reset}    gemini-claude-code service uninstall
   ${C.dim}View logs:${C.reset}      tail -f ${this.logDir}/stdout.log
 `);
   }
@@ -344,11 +366,14 @@ ${C.green}${C.bold}✓ Service installed successfully!${C.reset}
       const exitCode = parts[1];
 
       if (pid && pid !== "-") {
+        const saved = this.getSavedConfig();
+        const port = saved.port ?? this.config.port;
+        const host = saved.host ?? this.config.host;
         console.log(
           `\n  ${C.green}●${C.reset} Service ${C.bold}running${C.reset} (PID: ${pid})`
         );
         console.log(
-          `  ${C.dim}Listening on${C.reset} http://${this.config.host}:${this.config.port}\n`
+          `  ${C.dim}Listening on${C.reset} http://${host}:${port}\n`
         );
       } else {
         console.log(
@@ -421,7 +446,7 @@ ${C.green}${C.bold}✓ Service installed successfully!${C.reset}
 
   ${C.dim}To check status:${C.reset}   systemctl --user status ${SERVICE_NAME}
   ${C.dim}To view logs:${C.reset}      journalctl --user -u ${SERVICE_NAME} -f
-  ${C.dim}To uninstall:${C.reset}      bun run src/index.ts service uninstall
+  ${C.dim}To uninstall:${C.reset}      gemini-claude-code service uninstall
 `);
   }
 
@@ -462,11 +487,14 @@ ${C.green}${C.bold}✓ Service installed successfully!${C.reset}
       ).trim();
 
       if (output === "active") {
+        const saved = this.getSavedConfig();
+        const port = saved.port ?? this.config.port;
+        const host = saved.host ?? this.config.host;
         console.log(
           `\n  ${C.green}●${C.reset} Service ${C.bold}running${C.reset}`
         );
         console.log(
-          `  ${C.dim}Listening on${C.reset} http://${this.config.host}:${this.config.port}\n`
+          `  ${C.dim}Listening on${C.reset} http://${host}:${port}\n`
         );
       } else {
         console.log(
@@ -535,7 +563,7 @@ ${C.green}${C.bold}✓ Service installed successfully!${C.reset}
   The proxy will start automatically on login.
   ${C.dim}Run the .bat manually to start now, or restart your PC.${C.reset}
 
-  ${C.dim}To uninstall:${C.reset}  bun run src/index.ts service uninstall
+  ${C.dim}To uninstall:${C.reset}  gemini-claude-code service uninstall
 `);
   }
 

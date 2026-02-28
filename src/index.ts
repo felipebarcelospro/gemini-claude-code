@@ -10,7 +10,7 @@
  *
  * Environment variables:
  *   GEMINI_API_KEY   - Google AI API key (alternative to --api-key)
- *   PORT             - Server port (default: 4100)
+ *   PORT             - Server port (default: 8082)
  *   HOST             - Server host (default: 127.0.0.1)
  */
 
@@ -54,7 +54,7 @@ interface CliArgs {
 function parseArgs(args: string[]): CliArgs {
   const result: CliArgs = {
     apiKey: process.env.GEMINI_API_KEY ?? "",
-    port: parseInt(process.env.PORT ?? "4100", 10),
+    port: parseInt(process.env.PORT ?? "8082", 10),
     host: process.env.HOST ?? "127.0.0.1",
     verbose: false,
     help: false,
@@ -77,7 +77,7 @@ function parseArgs(args: string[]): CliArgs {
         break;
       case "--port":
       case "-p":
-        result.port = parseInt(args[++i] ?? "4100", 10);
+        result.port = parseInt(args[++i] ?? "8082", 10);
         break;
       case "--host":
       case "-H":
@@ -110,12 +110,12 @@ function printHelp(): void {
 ${C.bold}${C.cyan}gemini-claude-code${C.reset} — Gemini-to-Anthropic API proxy for Claude Code
 
 ${C.bold}USAGE${C.reset}
-  ${C.dim}$${C.reset} bun run src/index.ts ${C.yellow}--api-key${C.reset} <GEMINI_API_KEY> [options]
-  ${C.dim}$${C.reset} GEMINI_API_KEY=<key> bun run src/index.ts [options]
+  ${C.dim}$${C.reset} gemini-claude-code ${C.yellow}--api-key${C.reset} <GEMINI_API_KEY> [options]
+  ${C.dim}$${C.reset} GEMINI_API_KEY=<key> gemini-claude-code [options]
 
 ${C.bold}OPTIONS${C.reset}
   ${C.yellow}--api-key, -k${C.reset}   ${C.dim}<string>${C.reset}  Google AI API key ${C.dim}(or GEMINI_API_KEY env var)${C.reset}
-  ${C.yellow}--port, -p${C.reset}      ${C.dim}<number>${C.reset}  Server port ${C.dim}(default: 4100)${C.reset}
+  ${C.yellow}--port, -p${C.reset}      ${C.dim}<number>${C.reset}  Server port ${C.dim}(default: 8082)${C.reset}
   ${C.yellow}--host, -H${C.reset}      ${C.dim}<string>${C.reset}  Server host ${C.dim}(default: 127.0.0.1)${C.reset}
   ${C.yellow}--model, -m${C.reset}     ${C.dim}<string>${C.reset}  Default Gemini model override
   ${C.yellow}--verbose, -v${C.reset}             Enable debug logging
@@ -137,25 +137,25 @@ ${C.bold}SUPPORTED MODELS${C.reset}
 
 ${C.bold}CLAUDE CODE CONFIGURATION${C.reset}
   Set these environment variables before running Claude Code:
-  ${C.dim}$${C.reset} export ANTHROPIC_BASE_URL=http://localhost:4100
+  ${C.dim}$${C.reset} export ANTHROPIC_BASE_URL=http://localhost:8082
   ${C.dim}$${C.reset} export ANTHROPIC_API_KEY=dummy
   ${C.dim}$${C.reset} export ANTHROPIC_MODEL=gemini-3.0-flash
 
 ${C.bold}EXAMPLES${C.reset}
   ${C.dim}# Start the proxy server${C.reset}
-  ${C.dim}$${C.reset} bun run src/index.ts --api-key AIza...
+  ${C.dim}$${C.reset} gemini-claude-code --api-key AIza...
 
   ${C.dim}# Start with custom port and verbose logging${C.reset}
-  ${C.dim}$${C.reset} GEMINI_API_KEY=AIza... bun run src/index.ts -p 8080 -v
+  ${C.dim}$${C.reset} GEMINI_API_KEY=AIza... gemini-claude-code -p 8080 -v
 
   ${C.dim}# Install as auto-start service${C.reset}
-  ${C.dim}$${C.reset} bun run src/index.ts service install --api-key AIza... -p 4100
+  ${C.dim}$${C.reset} gemini-claude-code service install --api-key AIza... -p 8082
 
   ${C.dim}# Check service status${C.reset}
-  ${C.dim}$${C.reset} bun run src/index.ts service status
+  ${C.dim}$${C.reset} gemini-claude-code service status
 
   ${C.dim}# Remove auto-start service${C.reset}
-  ${C.dim}$${C.reset} bun run src/index.ts service uninstall
+  ${C.dim}$${C.reset} gemini-claude-code service uninstall
 `);
 }
 

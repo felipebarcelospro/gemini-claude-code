@@ -54,7 +54,7 @@ After starting the proxy, configure Claude Code to use it:
 
 ```bash
 # Set environment variables
-export ANTHROPIC_BASE_URL=http://localhost:4100
+export ANTHROPIC_BASE_URL=http://localhost:8082
 export ANTHROPIC_API_KEY=dummy
 export ANTHROPIC_MODEL=gemini-3.0-flash
 
@@ -137,7 +137,7 @@ USAGE
 
 OPTIONS
   --api-key, -k   <string>  Google AI API key (or GEMINI_API_KEY env var)
-  --port, -p      <number>  Server port (default: 4100)
+  --port, -p      <number>  Server port (default: 8082)
   --host, -H      <string>  Server host (default: 127.0.0.1)
   --model, -m     <string>  Default Gemini model override
   --verbose, -v             Enable debug logging
@@ -174,7 +174,7 @@ Register the proxy as a system service so it starts automatically:
 
 ```bash
 # Install (macOS: launchd, Linux: systemd, Windows: Startup folder)
-npx gemini-claude-code service install --api-key AIza... --port 4100
+npx gemini-claude-code service install --api-key AIza... --port 8082
 
 # Check status
 npx gemini-claude-code service status
@@ -302,7 +302,7 @@ Contributions are welcome! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) fo
 git clone https://github.com/felipebarcelospro/gemini-claude-code.git
 cd gemini-claude-code
 bun install
-bun run dev -- --port 4100
+bun run dev -- --port 8082
 ```
 
 ---
