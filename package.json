@@ -1,0 +1,58 @@
+{
+  "name": "gemini-claude-code",
+  "version": "1.0.0",
+  "description": "Use Gemini 3.x models with Claude Code — High-performance API proxy that translates Anthropic Messages API to Google Gemini",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "gemini-claude-code": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun --minify",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "gemini",
+    "anthropic",
+    "claude",
+    "claude-code",
+    "proxy",
+    "api",
+    "llm",
+    "gemini-3",
+    "gemini-pro",
+    "gemini-flash",
+    "ai",
+    "google-ai",
+    "web-search",
+    "youtube",
+    "streaming",
+    "bun"
+  ],
+  "author": "Felipe Barcelos",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipebarcelospro/gemini-claude-code.git"
+  },
+  "bugs": {
+    "url": "https://github.com/felipebarcelospro/gemini-claude-code/issues"
+  },
+  "homepage": "https://github.com/felipebarcelospro/gemini-claude-code#readme",
+  "license": "MIT",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.0"
+  }
+}
