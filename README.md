@@ -1,9 +1,9 @@
 # gemini-claude-code
 
-**Use Gemini 3.x models with Claude Code** — Drop-in proxy that lets you use Google's latest Gemini models (3.1 Pro, 3.0 Flash, 2.5 Pro) with Claude Code and any Anthropic-compatible tool.
-
 [![npm version](https://img.shields.io/npm/v/gemini-claude-code.svg)](https://www.npmjs.com/package/gemini-claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Use Gemini 3.x models with Claude Code** — Drop-in proxy that lets you use Google's latest Gemini models (3.1 Pro, 3.0 Flash, 2.5 Pro) with Claude Code and any Anthropic-compatible tool.
 
 ---
 
